@@ -81,6 +81,7 @@ class Email extends Object {
 			}
 		}
 
+
 		if ($config->settings->testMode == 'Y') {
 
 		  if ($config->settings->testModeEmailAddress) {
@@ -88,6 +89,7 @@ class Email extends Object {
 		  } else {
 			$testEmail = $config->settings->feedbackEmailAddress;
 		  }
+
 
 		  if ($testEmail) {
 			$updatedMessage = "Original To: ".$this->to."\n\n".$this->message;
