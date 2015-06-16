@@ -93,28 +93,15 @@ if ($config->settings->authModule == 'Y'){
 }
 
 
-//for the licensing module we require that the user exists in the database before granting access
-//thus, setuser.php is not used
-if ($loginID){
-  //Load user
-    $user = new User(new NamedArguments(array('primaryKey' => $loginID)));
-      $privilege = new Privilege(new NamedArguments(array('primaryKey' => $user->privilegeID)));
-        if (($user->firstName == "") && ($user->lastName == "")) {
-              header('Location: not_available.php');
-                }
-                  // the user doesn't exist in database we need to redirect them to a page to give instructions on how to be added
-                      if ($user->privilegeID == ""){
-                              header('Location: not_available.php');
-                                  }
+
+
+
+if (isset($loginID) && ($loginID != "")){
+	include_once('setuser.php');
+}else{
+	$user = new User();
+	$errorMessage = "Login is not working.  Check the .htaccess file and the remoteAuthVariableName specified in /admin/configuration.ini";
 }
-
-
-//if (isset($loginID) && ($loginID != "")){
-//	include_once('setuser.php');
-//}else{
-//	$user = new User();
-//	$errorMessage = "Login is not working.  Check the .htaccess file and the remoteAuthVariableName specified in /admin/configuration.ini";
-//}
 
 
 ?>

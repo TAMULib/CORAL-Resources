@@ -17,16 +17,19 @@
 **************************************************************************************************************************
 */
 
+$util = new Utility();
+$config = new Configuration();
+
 // tamu specific
 // use cas for authentication
-include_once 'cas.php';
-getCAS();
+if($config->tamu->enableCAS == 'Y') {
+    session_start();
+    include_once 'cas.php';
+	getCAS($config->tamu->host_cas);
+}
 //
 
 include_once 'user.php';
-
-$util = new Utility();
-$config = new Configuration();
 
 //get the current page to determine which menu button should be depressed
 $currentPage = $_SERVER["SCRIPT_NAME"];
@@ -89,7 +92,9 @@ $coralURL = $util->getCORALURL();
 
 ?>
 </span>
-<br /><?php if($config->settings->authModule == 'Y'){ echo "<a href='" . $coralURL . "auth/?logout'>logout</a>"; } ?>
+<br />
+<?php
+if($config->settings->authModule == 'Y'){ echo "<a href='" . $coralURL . "auth/?logout'>logout</a>"; } ?>
 <?php if ($config->settings->testMode == 'Y') { ?>
   <br><span style="color:red;font-size:90%;">(Test)</span>
 <?php } ?>
@@ -100,13 +105,13 @@ $coralURL = $util->getCORALURL();
 <tr style='vertical-align:top'>
 <td style='width:870px;height:19px;'>
 
-<?php if ($user->isAdmin()){ ?>
-<a href='index.php'><img src="images/menu/menu-home<?php if ($currentPage == 'index.php') { echo "-on"; } ?>.gif" hover="images/menu/menu-home-over.gif" class="rollover" /></a><img src='images/menu/menu-bar.gif'><a href='ajax_forms.php?action=getNewResourceForm&height=503&width=775&resourceID=&modal=true' class='thickbox' id='newResourceForm'><img src='images/menu/menu-newresource.gif' hover="images/menu/menu-newresource-over.gif" class="rollover"></a><img src='images/menu/menu-bar.gif'><a href='queue.php'><img src='images/menu/menu-myqueue<?php if ($currentPage == 'queue.php') { echo "-on"; } ?>.gif' hover="images/menu/menu-myqueue-over.gif" class="rollover"></a><img src='images/menu/menu-bar.gif'><a href='admin.php'><img src='images/menu/menu-admin<?php if ($currentPage == 'admin.php') { echo "-on"; } ?>.gif' hover="images/menu/menu-admin-over.gif" id="menu-last" class="rollover" /></a><img src='images/menu/menu-end<?php if ($currentPage == 'admin.php') { echo "-on"; } ?>.gif' hover="images/menu/menu-end-over.gif" id="menu-end" />
-<?php }else if ($user->canEdit()){ ?>
-<a href='index.php'><img src="images/menu/menu-home<?php if ($currentPage == 'index.php') { echo "-on"; } ?>.gif" hover="images/menu/menu-home-over.gif" class="rollover" /></a><img src='images/menu/menu-bar.gif'><a href='ajax_forms.php?action=getNewResourceForm&height=503&width=775&resourceID=&modal=true' class='thickbox' id='newResourceForm'><img src='images/menu/menu-newresource.gif' hover="images/menu/menu-newresource-over.gif" class="rollover"></a><img src='images/menu/menu-bar.gif'><a href='queue.php'><img src='images/menu/menu-myqueue<?php if ($currentPage == 'queue.php') { echo "-on"; } ?>.gif' hover="images/menu/menu-myqueue-over.gif" id="menu-last" class="rollover" /></a><img src='images/menu/menu-end<?php if ($currentPage == 'queue.php') { echo "-on"; } ?>.gif' hover="images/menu/menu-end-over.gif" id="menu-end" />
-<?php }else{ ?>
-<a href='index.php'><img src="images/menu/menu-home<?php if ($currentPage == 'index.php') { echo "-on"; } ?>.gif" hover="images/menu/menu-home-over.gif" class="rollover" id="menu-last" /></a><img src='images/menu/menu-end<?php if ($currentPage == 'index.php') { echo "-on"; } ?>.gif' hover="images/menu/menu-end-over.gif" id="menu-end" />
+<a href='index.php'><span class="menubtn<?php if ($currentPage == 'index.php') { echo " active"; } ?>" id="firstmenubtn">Home</span></a><?php if ($user->isAdmin() || $user->canEdit()){ ?>
+<a href='ajax_forms.php?action=getNewResourceForm&height=503&width=775&resourceID=&modal=true' class='thickbox' id='newResourceForm'><span class="menubtn">New Resource</span></a><!--
+--><a href='queue.php'><span class="menubtn<?php if ($currentPage == 'queue.php') { echo " active"; } ?>">My Queue</span></a><!--
+--><a href='import.php'><span class="menubtn<?php if ($currentPage == 'import.php') { echo " active"; } ?>">Import</span></a><!--
+--><?php if ($user->isAdmin()) { ?><a href='admin.php'><span class="menubtn<?php if ($currentPage == 'admin.php') { echo " active"; } ?>" id="lastmenubtn">Admin</span></a><?php } ?>
 <?php } ?>
+
 </td>
 
 <td style='width:130px;height:19px;' align='right'>
@@ -144,7 +149,12 @@ if ((file_exists($util->getCORALPath() . "index.php")) || ($config->settings->li
 				if ($config->settings->usageModule == 'Y') {
 				?>
 				<li><a href="<?php echo $coralURL; ?>usage/" target='_blank'><img src='images/change/coral-usage.gif'></a></li>
-				<?php } ?>
+				<?php 
+				} 
+				if ($config->settings->managementModule == 'Y') {
+				?>
+				<li><a href="<?php echo $coralURL; ?>management/" target='_blank'><img src='images/change/coral-management.gif'></a></li>
+				<?php } ?>				
 			</ul>
 		</li>
 		</ul>

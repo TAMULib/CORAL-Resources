@@ -46,7 +46,6 @@ $(function(){
 	$("#search_organization").autocomplete('ajax_processing.php?action=getOrganizationList', {
 		minChars: 2,
 		max: 20,
-		autoFill: true,
 		mustMatch: true,
 		width: 142,
 		delay: 20,
@@ -91,8 +90,6 @@ $(function(){
 	 });
 
 
-
-	jQuery.preLoadImages("images/menu/menu-home-over.gif", "images/menu/menu-newresource-over.gif","images/menu/menu-myqueue-over.gif", "images/menu/menu-admin-over.gif", "images/menu/menu-end-over.gif");
 	 
 	 //for swapping menu images
 	$('.rollover').hover(function() {
