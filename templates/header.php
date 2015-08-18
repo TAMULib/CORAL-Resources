@@ -17,6 +17,10 @@
 **************************************************************************************************************************
 */
 
+// TAMU specific
+// use cas for authentication
+include_once 'cas.php';
+getCAS();
 
 include_once 'user.php';
 
@@ -93,7 +97,6 @@ if($config->settings->authModule == 'Y'){ echo "<a href='" . $coralURL . "auth/?
 </div>
 </td>
 </tr>
-
 <tr style='vertical-align:top'>
 <td style='width:870px;height:19px;'>
 
