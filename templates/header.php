@@ -17,15 +17,19 @@
 **************************************************************************************************************************
 */
 
-// TAMU specific
-// use cas for authentication
-include_once 'cas.php';
-getCAS();
-
-include_once 'user.php';
-
 $util = new Utility();
 $config = new Configuration();
+
+// tamu specific
+// use cas for authentication
+if($config->tamu->enableCAS == 'Y') {
+    session_start();
+    include_once 'cas.php';
+	  getCAS($config->tamu->host_cas, $config->tamu->ip_cas);
+}
+//
+
+include_once 'user.php';
 
 //get the current page to determine which menu button should be depressed
 $currentPage = $_SERVER["SCRIPT_NAME"];
@@ -134,7 +138,7 @@ if ((file_exists($util->getCORALPath() . "index.php")) || ($config->settings->li
     
 	<div style='text-align:left;'>
 		<ul class="tabs">
-		<li class="changeMod"><?php echo _("Change Module");?>&nbsp;▼
+		<li class="changeMod"><?php echo _("Change Module");?>&nbsp;
 			<ul class="coraldropdown">
 				<?php if (file_exists($util->getCORALPath() . "index.php")) {?>
 				<li><a href="<?php echo $coralURL; ?>" target='_blank'><img src='images/change/coral-main.gif'></a></li>
@@ -158,7 +162,12 @@ if ((file_exists($util->getCORALPath() . "index.php")) || ($config->settings->li
 				if ($config->settings->usageModule == 'Y') {
 				?>
 				<li><a href="<?php echo $coralURL; ?>usage/" target='_blank'><img src='images/change/coral-usage.gif'></a></li>
-				<?php } ?>
+				<?php 
+				} 
+				if ($config->settings->managementModule == 'Y') {
+				?>
+				<li><a href="<?php echo $coralURL; ?>management/" target='_blank'><img src='images/change/coral-management.gif'></a></li>
+				<?php } ?>				
 			</ul>
 		</li>
 		</ul>
