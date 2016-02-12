@@ -109,6 +109,9 @@ a.helpfulLink {color:#526972;}
 .boldText{font-weight:bold;}
 .bigBlueText{font-size:125%; color:#526972;}
 .headerText {font-size:125%;font-weight:bold; }
+.capitalize {
+	text-transform: capitalize;
+}
 
 
 
@@ -121,7 +124,6 @@ select option { color: #3D545D; font-family: "arial"; font-size: 95%; margin:1px
 
 
 input, select, multiple, textarea{color: #3D545D; font-family: "arial"; font-size: 95%;}
-
 
 /* following is for the right panel (helpful links) in the resource page
 *************************/
@@ -1136,4 +1138,8 @@ select option.changeSelect{
 
 #importPage h1, h2 {
   color: #2c3c42;
+}
+
+.task-group h3 {
+	margin: 8px 12px;
 }
