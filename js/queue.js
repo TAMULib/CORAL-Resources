@@ -54,6 +54,19 @@
 			}
 		});
 	});
+
+	$(".mark-reviewed").live("click", function(e) {
+		e.preventDefault();
+		$.ajax({
+			type:       "GET",
+			url:        "ajax_processing.php",
+			cache:      false,
+			data:       "action=markReviewed&resourceStepID=" + $(this).attr("href"),
+			success:    function(html) {
+ 		  		updateOutstandingTasks();
+			}
+		});
+	});
  });
  
 

@@ -61,6 +61,11 @@ class ResourceStep extends DatabaseObject {
 
 	}
 
+	public function reviewStep(){
+		$this->reviewDate = date('Y-m-d');
+		$this->reviewLoginID = $_SESSION['loginID'];
+		$this->save;
+	}
 
 	public function startStep(){
 
