@@ -40,8 +40,20 @@
 
  	 $("#SavedRequests").click(function () {
  		  updateSavedRequests();
-	 });	 
-	 
+	 });
+
+	$(".mark-complete").live("click", function(e) {
+		e.preventDefault();
+		$.ajax({
+			type:       "GET",
+			url:        "ajax_processing.php",
+			cache:      false,
+			data:       "action=markComplete&resourceStepID=" + $(this).attr("href"),
+			success:    function(html) {
+ 		  		updateOutstandingTasks();
+			}
+		});
+	});
  });
  
 
