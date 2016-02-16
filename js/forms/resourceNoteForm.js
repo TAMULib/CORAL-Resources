@@ -57,7 +57,11 @@ function submitResourceNote(){
 						$("#submitResourceNoteForm").removeAttr("disabled");
 					}else{
 						window.parent.tb_remove();
-						eval("window.parent.update" + $("#tab").val() + "();");
+						var updateFunction = "update" + $("#tab").val();
+
+						if (typeof window.parent[updateFunction] == 'function') {
+							eval("window.parent.update" + $("#tab").val() + "();");
+						}
 						return false;
 					}			
 				 }
