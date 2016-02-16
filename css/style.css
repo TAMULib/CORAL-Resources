@@ -1259,3 +1259,11 @@ select option.changeSelect{
 .issueList h3 {
 	margin-top: 8px;
 }
+
+.existing-notes {
+	margin-top: 12px;
+}
+
+.existing-notes h3 {
+	margin: 8px 0;
+}
